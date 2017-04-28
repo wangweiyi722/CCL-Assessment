@@ -1,7 +1,7 @@
 
 
 maxim = 0
-
+trace = []
 # Make a company class to take in name,amount and price
 class Company:
     
@@ -68,14 +68,44 @@ def mergeSort(alist):
 def maxProfit(compList,tracker, availUnits):
     # Base case occurs when available units is less than the number of units
     # requested by the next company in the list
-    
-    if availUnits < compList[-1].amount:
+    global maxim
+    global trace
+    print("-----------------------------------------")
+    print("Company List: ")
+    for comp in compList:
+        print(comp)
         
-        return tracker
+    print()
+    print("Tracker: ")
+    for comp in tracker:
+        print(comp)
+        
+    print()
+    print("availUnits")
+    print(availUnits)
+    print()
+    print("-------------------------------------------")
+    if len(compList)==0:
+        print("Reached end")
+        if findProfit(tracker) > maxim:
+            maxim = findProfit(tracker)
+            trace = tracker[:]
+            print ("proposed solution: ")
+            for item in trace:
+                print (item)
+    elif availUnits < compList[-1].amount:
+        print("Skipping")
+        maxProfit(compList[:-1],tracker,availUnits)
+        
     else:
+        
         tracker.append(compList[-1])
         compList = compList[:-1]
-        return maxProfit(compList,tracker, availUnits-tracker[-1].amount)
+        print("Going into max profit1")
+        maxProfit(compList,tracker, availUnits-tracker[-1].amount)
+        print("Going into max profit2")
+        maxProfit(compList,tracker[:-1], availUnits)
+        
 
 
 
@@ -89,7 +119,7 @@ def compMaxAmt(compList):
     return max
 
 def main():
-    in_file = open('pricedata.csv','r')
+    in_file = open('pricedatasimple.csv','r')
     header = in_file.readline()
     print(header)
     companyList = []
@@ -141,9 +171,10 @@ def main():
     
     print()
     print("3")
-    listTest = maxProfit(companyList,tracker,availUnits)
-   
-    for item in listTest:
+    
+    maxProfit(companyList,tracker,availUnits)
+    print("maxim: "+str(maxim))
+    for item in trace:
         print(item)
 
     
