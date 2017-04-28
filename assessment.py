@@ -120,7 +120,7 @@ def compMaxAmt(compList):
     return max
 
 def main():
-    in_file = open('pricedata.csv','r')
+    in_file = open('counterexample.csv','r')
     header = in_file.readline()
     print(header)
     companyList = []
@@ -138,6 +138,8 @@ def main():
     tracker = []
     
     # Simply choose the companies with the highest price/unit as long as this is true
+    # Hopefully doing this will reduce the size of the problem fed into the recursive function
+    # Worst case is that it won't change anything.
     unlSpend = True     
     
     while idx >= 0 and unlSpend and len(companyList) != 0:
@@ -175,6 +177,8 @@ def main():
     
     maxProfit(companyList,tracker,availUnits)
     print("maxim: "+str(maxim))
+    print()
+    print("Companies to sell to:")
     for item in trace:
         print(item)
 
