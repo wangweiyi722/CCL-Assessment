@@ -100,11 +100,12 @@ def maxProfit(compList,tracker, availUnits):
     else:
         
         tracker.append(compList[-1])
-        compList = compList[:-1]
+        
         print("Going into max profit1")
-        maxProfit(compList,tracker, availUnits-tracker[-1].amount)
+        maxProfit(compList[:-1],tracker, availUnits-tracker[-1].amount)
         print("Going into max profit2")
-        maxProfit(compList,tracker[:-1], availUnits)
+        del tracker[-1]
+        maxProfit(compList[:-1],tracker, availUnits)
         
 
 
@@ -119,7 +120,7 @@ def compMaxAmt(compList):
     return max
 
 def main():
-    in_file = open('pricedatasimple.csv','r')
+    in_file = open('pricedata.csv','r')
     header = in_file.readline()
     print(header)
     companyList = []
